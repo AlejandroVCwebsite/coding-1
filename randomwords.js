@@ -2,7 +2,7 @@ function generateRandomWord() {
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Basic Pong HTML Game</title>
+  <title>Random Word Generator</title>
   <meta charset="UTF-8">
   <style>
   html, body {
