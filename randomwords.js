@@ -186,5 +186,4 @@ document.addEventListener('keyup', function(e) {
 requestAnimationFrame(loop);
 </script>
 </body>
-</html>
 }
