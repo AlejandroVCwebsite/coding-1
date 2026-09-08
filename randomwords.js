@@ -1,14 +1,4 @@
 function generateRandomWord() {
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Random Word Generator</title>
-  <meta charset="UTF-8">
-  <style>
-  html, body {
-    height: 100%;
-    margin: 0;
-  }
 
   body {
     background: black;
