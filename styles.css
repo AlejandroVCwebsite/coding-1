@@ -1,0 +1,12 @@
+body {
+  background-color: Crimson
+  font-family: "Gill Sans Extrabold", sans-serif;
+  text-align: center;
+  padding: 60px;
+}
+h1 {
+  font-size: 100px;
+  color: Black;
+  margin-bottom:50px;
+  text-shadow: 2px 2px White;
+}
