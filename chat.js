@@ -7,7 +7,7 @@ const chatbotResponses = {
 };
 
 function handleUserInput(event) {
-  if (event.key == "Enter") {
+  if (event.key === 'Enter') {
     const userInput = document.getElementById("userInput").value;
     const chat = document.getElementById("chat");
 
