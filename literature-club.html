@@ -1,65 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- =====================================================
+     LITERATURE CLUB GAME — EMBEDDED VERSION
+     
+     Required images:
+     corridor.jpg
+     Club.jpeg
+     Monica.jpeg
+     Natsuki.jpg
+     Yuri.jpeg
+     Sayori.jpeg
+===================================================== -->
 
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Literature Club</title>
+<div id="lc-game">
 
 <style>
 
-/* =========================================================
-   GENERAL
-========================================================= */
+/* =====================================================
+   GAME CONTAINER
+===================================================== */
 
-* {
-    box-sizing: border-box;
-}
-
-html,
-body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-}
-
-body {
-    background: #111;
-    font-family: Arial, Helvetica, sans-serif;
-    overflow: hidden;
-}
-
-
-/* =========================================================
-   GAME
-========================================================= */
-
-#game {
-
+#lc-game {
     position: relative;
-
-    width: 100vw;
-    height: 100vh;
-
+    width: 100%;
+    max-width: 1200px;
+    height: 700px;
+    margin: 20px auto;
     overflow: hidden;
 
-    background: #f6cddd;
+    background: #111;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color: white;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,.35);
 }
 
 
-/* =========================================================
+/* =====================================================
    BACKGROUND
-========================================================= */
+===================================================== */
 
-#background {
-
+#lc-background {
     position: absolute;
 
     inset: 0;
 
-    background-image: url("corridor.jpg");
+    background-image:
+        url("corridor.jpg");
 
     background-size: cover;
 
@@ -68,18 +61,18 @@ body {
     background-repeat: no-repeat;
 
     transition:
-        background-image .8s,
-        filter .2s;
+        filter .2s ease,
+        background-image .7s ease;
 }
 
 
-/* =========================================================
+/* =====================================================
    NAME SCREEN
-========================================================= */
+===================================================== */
 
-#nameScreen {
+#lc-name-screen {
 
-    position: fixed;
+    position: absolute;
 
     inset: 0;
 
@@ -93,52 +86,64 @@ body {
 
     background:
         linear-gradient(
-            rgba(255,190,220,.92),
-            rgba(255,225,238,.97)
+            rgba(255,190,220,.94),
+            rgba(255,225,238,.98)
         );
 }
 
-.nameBox {
 
-    width: min(520px, 90vw);
+#lc-name-box {
 
-    padding: 42px;
+    width:
+        min(520px, 90%);
+
+    padding: 40px;
 
     text-align: center;
 
-    background: rgba(255,255,255,.96);
+    background:
+        rgba(255,255,255,.98);
+
+    color: #333;
 
     border-radius: 16px;
 
     box-shadow:
-        0 15px 50px rgba(100,30,70,.3);
+        0 15px 50px
+        rgba(100,30,70,.35);
 }
 
-.nameBox h1 {
 
-    margin-top: 0;
+#lc-name-box h1 {
+
+    margin:
+        0 0 15px;
 
     color: #d94f8b;
 
     font-size: 32px;
 }
 
-.nameBox p {
 
-    color: #555;
+#lc-name-box p {
 
-    font-size: 18px;
+    font-size: 17px;
+
+    line-height: 1.5;
 }
 
-#nameInput {
+
+#lc-name-input {
 
     width: 100%;
 
-    padding: 14px;
+    padding: 13px;
 
-    margin: 15px 0;
+    margin:
+        12px 0 18px;
 
-    border: 2px solid #ff9fc5;
+    border:
+        2px solid #ff9fc5;
 
     border-radius: 8px;
 
@@ -147,20 +152,25 @@ body {
     font-size: 18px;
 }
 
-#nameInput:focus {
 
-    border-color: #d94f8b;
+#lc-name-input:focus {
+
+    border-color:
+        #d94f8b;
 }
 
-#nameButton {
 
-    padding: 13px 30px;
+#lc-start-button {
+
+    padding:
+        13px 30px;
 
     border: none;
 
     border-radius: 8px;
 
-    background: #e75a98;
+    background:
+        #e75a98;
 
     color: white;
 
@@ -169,43 +179,45 @@ body {
     cursor: pointer;
 }
 
-#nameButton:hover {
 
-    background: #c9407d;
+#lc-start-button:hover {
+
+    background:
+        #c9407d;
 }
 
 
-/* =========================================================
+/* =====================================================
    CHARACTERS
-========================================================= */
+===================================================== */
 
-.character {
+.lc-character {
 
     position: absolute;
 
     bottom: 135px;
 
     width: 300px;
+
     height: 500px;
 
     display: flex;
 
-    align-items: flex-end;
-
     justify-content: center;
 
-    opacity: 1;
+    align-items: flex-end;
 
-    transition:
-        opacity .4s,
-        transform .4s;
+    z-index: 5;
 
     pointer-events: none;
 
-    z-index: 5;
+    transition:
+        opacity .35s ease,
+        transform .35s ease;
 }
 
-.character.hidden {
+
+.lc-character.hidden {
 
     opacity: 0;
 
@@ -214,117 +226,128 @@ body {
         scale(.96);
 }
 
-.character img {
+
+.lc-character img {
+
+    display: block;
 
     max-width: 100%;
+
     max-height: 100%;
 
     width: auto;
+
     height: auto;
 
     object-fit: contain;
 
-    display: block;
-
     filter:
         drop-shadow(
             0 8px 12px
-            rgba(0,0,0,.3)
+            rgba(0,0,0,.35)
         );
 }
 
 
-/* Character positions */
+#lc-sayori {
 
-#sayori {
-
-    left: 6%;
+    left: 4%;
 }
 
-#natsuki {
+
+#lc-natsuki {
 
     left: 27%;
 }
 
-#yuri {
+
+#lc-yuri {
 
     right: 27%;
 }
 
-#monika {
 
-    right: 6%;
+#lc-monika {
+
+    right: 4%;
 }
 
 
-/* =========================================================
-   DIALOGUE BOX
-========================================================= */
+/* =====================================================
+   DIALOGUE
+===================================================== */
 
-#dialogue {
+#lc-dialogue {
 
     position: absolute;
 
-    left: 4%;
-    right: 4%;
+    left: 3%;
+
+    right: 3%;
 
     bottom: 18px;
 
     min-height: 135px;
 
-    padding: 18px 24px;
+    padding:
+        18px 24px;
+
+    z-index: 20;
 
     background:
-        rgba(20,20,28,.94);
+        rgba(20,20,28,.95);
 
     border:
         3px solid #ffb6d3;
 
     border-radius: 14px;
 
-    color: white;
-
     box-shadow:
         0 0 30px
         rgba(100,30,70,.35);
 
     cursor: pointer;
-
-    z-index: 10;
 }
 
-#speaker {
+
+#lc-speaker {
 
     margin-bottom: 8px;
 
-    color: #ff9fc5;
+    color:
+        #ff9fc5;
 
     font-size: 21px;
 
     font-weight: bold;
 }
 
-#text {
+
+#lc-text {
 
     font-size: 18px;
 
     line-height: 1.55;
 }
 
-#continueIndicator {
+
+#lc-indicator {
 
     position: absolute;
 
     right: 18px;
 
-    bottom: 10px;
+    bottom: 9px;
 
-    color: #ff9fc5;
+    color:
+        #ff9fc5;
 
-    animation: blink 1s infinite;
+    animation:
+        lc-blink 1s infinite;
 }
 
-@keyframes blink {
+
+@keyframes lc-blink {
 
     0%, 100% {
         opacity: .2;
@@ -337,29 +360,31 @@ body {
 }
 
 
-/* =========================================================
+/* =====================================================
    CHOICES
-========================================================= */
+===================================================== */
 
-#choices {
+#lc-choices {
 
     position: absolute;
 
     left: 50%;
+
     top: 50%;
 
     transform:
         translate(-50%, -50%);
 
     width:
-        min(550px, 90vw);
+        min(550px, 90%);
 
-    z-index: 30;
+    z-index: 40;
 
     display: none;
 }
 
-.choice {
+
+.lc-choice {
 
     display: block;
 
@@ -373,7 +398,8 @@ body {
 
     border-radius: 9px;
 
-    background: #e875a8;
+    background:
+        #e875a8;
 
     color: white;
 
@@ -383,78 +409,86 @@ body {
 
     box-shadow:
         0 5px 15px
-        rgba(100,20,60,.2);
+        rgba(100,20,60,.25);
 
     transition:
         transform .15s,
         background .15s;
 }
 
-.choice:hover {
 
-    background: #cf4d87;
+.lc-choice:hover {
 
-    transform: scale(1.03);
+    background:
+        #cf4d87;
+
+    transform:
+        scale(1.03);
 }
 
 
-/* =========================================================
+/* =====================================================
    POETRY
-========================================================= */
+===================================================== */
 
-#poetry {
+#lc-poetry {
 
     position: absolute;
 
     inset: 0;
 
-    z-index: 40;
+    z-index: 50;
 
     display: none;
 
-    padding: 35px;
+    padding: 30px;
 
     overflow-y: auto;
 
     background:
         linear-gradient(
-            rgba(255,230,240,.97),
-            rgba(255,213,230,.97)
+            rgba(255,230,240,.98),
+            rgba(255,213,230,.98)
         );
+
+    color: #333;
 
     text-align: center;
 }
 
-#poetry h1 {
 
-    margin-top: 5px;
+#lc-poetry h1 {
 
-    color: #c9417d;
+    color:
+        #c9417d;
 }
 
-#poetry p {
 
-    color: #555;
+#lc-poetry p {
 
     font-size: 17px;
 }
 
-#poemResult {
+
+#lc-poem-result {
 
     min-height: 40px;
 
-    margin: 20px auto;
+    margin:
+        20px auto;
 
     max-width: 750px;
 
-    color: #9f3568;
+    color:
+        #9f3568;
 
     font-size: 20px;
 
     font-style: italic;
 }
 
-.words {
+
+#lc-word-list {
 
     display: flex;
 
@@ -464,48 +498,56 @@ body {
 
     gap: 10px;
 
-    max-width: 750px;
+    max-width: 800px;
 
     margin: 25px auto;
 }
 
-.word {
 
-    padding: 10px 16px;
+.lc-word {
 
-    background: white;
+    padding:
+        10px 16px;
 
     border:
         2px solid #ff9fc5;
 
     border-radius: 8px;
 
-    color: #743b55;
+    background: white;
+
+    color:
+        #743b55;
 
     cursor: pointer;
 
-    transition: .15s;
+    font-size: 15px;
 }
 
-.word:hover {
 
-    background: #ffd3e4;
+.lc-word:hover {
+
+    background:
+        #ffd3e4;
 
     transform:
-        translateY(-3px);
+        translateY(-2px);
 }
 
-#continuePoem {
+
+#lc-finish-poem {
 
     display: none;
 
-    padding: 13px 30px;
+    padding:
+        13px 30px;
 
     border: none;
 
     border-radius: 8px;
 
-    background: #d94f8b;
+    background:
+        #d94f8b;
 
     color: white;
 
@@ -515,11 +557,11 @@ body {
 }
 
 
-/* =========================================================
+/* =====================================================
    ENDING
-========================================================= */
+===================================================== */
 
-#ending {
+#lc-ending {
 
     position: absolute;
 
@@ -531,46 +573,56 @@ body {
 
     flex-direction: column;
 
-    align-items: center;
-
     justify-content: center;
 
-    background: #090909;
+    align-items: center;
 
-    color: #ffb6d3;
+    padding: 30px;
+
+    background:
+        #090909;
+
+    color:
+        #ffb6d3;
 
     text-align: center;
 }
 
-#ending h1 {
+
+#lc-ending h1 {
 
     font-size: 46px;
 
     margin-bottom: 10px;
 }
 
-#ending p {
 
-    max-width: 600px;
+#lc-ending p {
 
-    color: #ddd;
+    max-width: 650px;
+
+    color:
+        #ddd;
 
     font-size: 18px;
 
     line-height: 1.6;
 }
 
-#restart {
+
+#lc-restart {
 
     margin-top: 20px;
 
-    padding: 13px 30px;
+    padding:
+        13px 30px;
 
     border: none;
 
     border-radius: 8px;
 
-    background: #e75a98;
+    background:
+        #e75a98;
 
     color: white;
 
@@ -578,80 +630,71 @@ body {
 }
 
 
-/* =========================================================
+/* =====================================================
    GLITCH
-========================================================= */
+===================================================== */
 
-.glitch {
+.lc-glitch {
 
     animation:
-        glitch .08s infinite;
+        lc-glitch-animation .08s infinite;
 }
 
-@keyframes glitch {
+
+@keyframes lc-glitch-animation {
 
     0% {
-
-        transform:
-            translate(0);
-
+        transform: translate(0);
         filter: none;
     }
 
     20% {
-
-        transform:
-            translate(6px,-3px);
-
-        filter:
-            hue-rotate(90deg);
+        transform: translate(6px,-3px);
+        filter: hue-rotate(90deg);
     }
 
     40% {
-
-        transform:
-            translate(-5px,3px);
-
-        filter:
-            contrast(1.5);
+        transform: translate(-5px,3px);
+        filter: contrast(1.5);
     }
 
     60% {
-
-        transform:
-            translate(3px,5px);
-
-        filter:
-            hue-rotate(-90deg);
+        transform: translate(3px,5px);
+        filter: hue-rotate(-90deg);
     }
 
     80% {
-
-        transform:
-            translate(-4px,-2px);
-
-        filter:
-            invert(.08);
+        transform: translate(-4px,-2px);
+        filter: invert(.08);
     }
 
     100% {
-
-        transform:
-            translate(0);
-
+        transform: translate(0);
         filter: none;
     }
 
 }
 
 
-/* =========================================================
+/* =====================================================
    MOBILE
-========================================================= */
+===================================================== */
 
 @media (max-width: 700px) {
 
-    .character {
+    #lc-game {
+
+        height: 100vh;
+
+        max-height: 700px;
+
+        border-radius: 0;
+
+        margin: 0;
+    }
+
+
+    .lc-character {
 
         width: 180px;
 
@@ -660,28 +703,34 @@ body {
         bottom: 145px;
     }
 
-    #sayori {
+
+    #lc-sayori {
         left: 0;
     }
 
-    #natsuki {
-        left: 18%;
+
+    #lc-natsuki {
+        left: 17%;
     }
 
-    #yuri {
-        right: 18%;
+
+    #lc-yuri {
+        right: 17%;
     }
 
-    #monika {
+
+    #lc-monika {
         right: 0;
     }
 
-    #text {
 
-        font-size: 16px;
+    #lc-text {
+
+        font-size: 15px;
     }
 
-    #speaker {
+
+    #lc-speaker {
 
         font-size: 18px;
     }
@@ -690,32 +739,30 @@ body {
 
 </style>
 
-</head>
-
-
-<body>
-
 
 <!-- =====================================================
-     NAME ENTRY SCREEN
+     NAME SCREEN
 ===================================================== -->
 
-<div id="nameScreen">
+<div id="lc-name-screen">
 
-    <div class="nameBox">
+    <div id="lc-name-box">
 
-        <h1>Literature Club</h1>
+        <h1>
+            Literature Club
+        </h1>
 
         <p>
-            Welcome.
+            Welcome to the Literature Club.
         </p>
 
         <p>
-            Before we begin, what should everyone call you?
+            Before we begin, what should everyone
+            call you?
         </p>
 
         <input
-            id="nameInput"
+            id="lc-name-input"
             type="text"
             maxlength="20"
             placeholder="Enter your name..."
@@ -724,7 +771,7 @@ body {
 
         <br>
 
-        <button id="nameButton">
+        <button id="lc-start-button">
             Enter the Club
         </button>
 
@@ -734,252 +781,193 @@ body {
 
 
 <!-- =====================================================
-     GAME
+     BACKGROUND
 ===================================================== -->
 
-<div id="game">
+<div id="lc-background"></div>
 
 
-    <!-- BACKGROUND -->
+<!-- =====================================================
+     SAYORI
+===================================================== -->
 
-    <div id="background"></div>
+<div
+    id="lc-sayori"
+    class="lc-character hidden"
+>
 
-
-    <!-- =================================================
-         SAYORI
-    ================================================= -->
-
-    <div
-        id="sayori"
-        class="character hidden"
+    <img
+        src="Sayori.jpeg"
+        alt="Sayori"
     >
 
-        <img
-            src="Sayori.jpeg"
-            alt="Sayori"
-        >
-
-    </div>
+</div>
 
 
-    <!-- =================================================
-         NATSUKI
-    ================================================= -->
+<!-- =====================================================
+     NATSUKI
+===================================================== -->
 
-    <div
-        id="natsuki"
-        class="character hidden"
+<div
+    id="lc-natsuki"
+    class="lc-character hidden"
+>
+
+    <img
+        src="Natsuki.jpg"
+        alt="Natsuki"
     >
 
-        <img
-            src="Natsuki.jpg"
-            alt="Natsuki"
-        >
-
-    </div>
+</div>
 
 
-    <!-- =================================================
-         YURI
-    ================================================= -->
+<!-- =====================================================
+     YURI
+===================================================== -->
 
-    <div
-        id="yuri"
-        class="character hidden"
+<div
+    id="lc-yuri"
+    class="lc-character hidden"
+>
+
+    <img
+        src="Yuri.jpeg"
+        alt="Yuri"
     >
 
-        <img
-            src="Yuri.jpeg"
-            alt="Yuri"
-        >
-
-    </div>
+</div>
 
 
-    <!-- =================================================
-         MONIKA
-    ================================================= -->
+<!-- =====================================================
+     MONIKA
+===================================================== -->
 
-    <div
-        id="monika"
-        class="character hidden"
+<div
+    id="lc-monika"
+    class="lc-character hidden"
+>
+
+    <img
+        src="Monica.jpeg"
+        alt="Monika"
     >
 
-        <img
-            src="Monica.jpeg"
-            alt="Monika"
-        >
+</div>
+
+
+<!-- =====================================================
+     DIALOGUE BOX
+===================================================== -->
+
+<div id="lc-dialogue">
+
+    <div id="lc-speaker">
+        Narrator
+    </div>
+
+    <div id="lc-text">
+        ...
+    </div>
+
+    <div id="lc-indicator">
+        ▼
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     CHOICES
+===================================================== -->
+
+<div id="lc-choices"></div>
+
+
+<!-- =====================================================
+     POETRY
+===================================================== -->
+
+<div id="lc-poetry">
+
+    <h1>
+        Write a Poem
+    </h1>
+
+    <p>
+        Choose at least five words for your poem.
+    </p>
+
+    <div id="lc-poem-result">
+        Your poem is empty...
+    </div>
+
+    <div id="lc-word-list">
+
+        <button class="lc-word">Dream</button>
+        <button class="lc-word">Love</button>
+        <button class="lc-word">Sunshine</button>
+        <button class="lc-word">Smile</button>
+        <button class="lc-word">Memory</button>
+        <button class="lc-word">Hope</button>
+        <button class="lc-word">Rain</button>
+        <button class="lc-word">Lonely</button>
+        <button class="lc-word">Heart</button>
+        <button class="lc-word">Secret</button>
+        <button class="lc-word">Fear</button>
+        <button class="lc-word">Star</button>
+        <button class="lc-word">Home</button>
+        <button class="lc-word">Forever</button>
+        <button class="lc-word">Silence</button>
+        <button class="lc-word">Ocean</button>
+        <button class="lc-word">Friend</button>
+        <button class="lc-word">Night</button>
+        <button class="lc-word">Warmth</button>
+        <button class="lc-word">Broken</button>
 
     </div>
 
+    <button id="lc-finish-poem">
+        Finish Poem
+    </button>
 
-    <!-- =================================================
-         DIALOGUE
-    ================================================= -->
-
-    <div id="dialogue">
-
-        <div id="speaker">
-            Narrator
-        </div>
-
-        <div id="text">
-            ...
-        </div>
-
-        <div id="continueIndicator">
-            ▼
-        </div>
-
-    </div>
+</div>
 
 
-    <!-- =================================================
-         CHOICES
-    ================================================= -->
+<!-- =====================================================
+     ENDING
+===================================================== -->
 
-    <div id="choices"></div>
+<div id="lc-ending">
 
+    <h1 id="lc-ending-title">
+        The End
+    </h1>
 
-    <!-- =================================================
-         POETRY
-    ================================================= -->
+    <p id="lc-ending-text">
+        ...
+    </p>
 
-    <div id="poetry">
-
-        <h1>
-            Write a Poem
-        </h1>
-
-        <p>
-            Choose at least five words.
-            Your choices may influence what happens next.
-        </p>
-
-        <div id="poemResult">
-            Your poem is empty...
-        </div>
-
-        <div class="words">
-
-            <button class="word">
-                Dream
-            </button>
-
-            <button class="word">
-                Love
-            </button>
-
-            <button class="word">
-                Sunshine
-            </button>
-
-            <button class="word">
-                Smile
-            </button>
-
-            <button class="word">
-                Memory
-            </button>
-
-            <button class="word">
-                Hope
-            </button>
-
-            <button class="word">
-                Rain
-            </button>
-
-            <button class="word">
-                Lonely
-            </button>
-
-            <button class="word">
-                Heart
-            </button>
-
-            <button class="word">
-                Secret
-            </button>
-
-            <button class="word">
-                Fear
-            </button>
-
-            <button class="word">
-                Star
-            </button>
-
-            <button class="word">
-                Home
-            </button>
-
-            <button class="word">
-                Forever
-            </button>
-
-            <button class="word">
-                Silence
-            </button>
-
-            <button class="word">
-                Ocean
-            </button>
-
-            <button class="word">
-                Friend
-            </button>
-
-            <button class="word">
-                Night
-            </button>
-
-            <button class="word">
-                Warmth
-            </button>
-
-            <button class="word">
-                Broken
-            </button>
-
-        </div>
-
-        <button id="continuePoem">
-            Finish Poem
-        </button>
-
-    </div>
-
-
-    <!-- =================================================
-         ENDING
-    ================================================= -->
-
-    <div id="ending">
-
-        <h1 id="endingTitle">
-            The End
-        </h1>
-
-        <p id="endingText">
-            ...
-        </p>
-
-        <button id="restart">
-            Start Again
-        </button>
-
-    </div>
-
+    <button id="lc-restart">
+        Start Again
+    </button>
 
 </div>
 
 
 <script>
 
-/* =========================================================
-   GAME VARIABLES
-========================================================= */
+/* =====================================================
+   EMBEDDED GAME
+===================================================== */
+
+(function() {
+
+"use strict";
+
+
+/* =====================================================
+   STATE
+===================================================== */
 
 let playerName = "";
 
@@ -987,16 +975,12 @@ let sceneIndex = 0;
 
 let poemWords = [];
 
-let postPoemStarted = false;
-
 let gameFinished = false;
 
+let glitchStarted = false;
 
-/* =========================================================
-   AFFECTION
-========================================================= */
 
-let affection = {
+const affection = {
 
     sayori: 0,
 
@@ -1009,145 +993,170 @@ let affection = {
 };
 
 
-/* =========================================================
+/* =====================================================
    ELEMENTS
-========================================================= */
+===================================================== */
+
+const root =
+    document.getElementById(
+        "lc-game"
+    );
+
 
 const nameScreen =
     document.getElementById(
-        "nameScreen"
+        "lc-name-screen"
     );
+
 
 const nameInput =
     document.getElementById(
-        "nameInput"
+        "lc-name-input"
     );
 
-const nameButton =
+
+const startButton =
     document.getElementById(
-        "nameButton"
+        "lc-start-button"
     );
 
-const dialogue =
-    document.getElementById(
-        "dialogue"
-    );
-
-const speaker =
-    document.getElementById(
-        "speaker"
-    );
-
-const text =
-    document.getElementById(
-        "text"
-    );
-
-const choices =
-    document.getElementById(
-        "choices"
-    );
-
-const poetry =
-    document.getElementById(
-        "poetry"
-    );
-
-const poemResult =
-    document.getElementById(
-        "poemResult"
-    );
-
-const continuePoem =
-    document.getElementById(
-        "continuePoem"
-    );
 
 const background =
     document.getElementById(
-        "background"
+        "lc-background"
     );
+
+
+const dialogue =
+    document.getElementById(
+        "lc-dialogue"
+    );
+
+
+const speaker =
+    document.getElementById(
+        "lc-speaker"
+    );
+
+
+const text =
+    document.getElementById(
+        "lc-text"
+    );
+
+
+const choices =
+    document.getElementById(
+        "lc-choices"
+    );
+
+
+const poetry =
+    document.getElementById(
+        "lc-poetry"
+    );
+
+
+const poemResult =
+    document.getElementById(
+        "lc-poem-result"
+    );
+
+
+const finishPoem =
+    document.getElementById(
+        "lc-finish-poem"
+    );
+
 
 const ending =
     document.getElementById(
-        "ending"
+        "lc-ending"
     );
+
 
 const endingTitle =
     document.getElementById(
-        "endingTitle"
+        "lc-ending-title"
     );
+
 
 const endingText =
     document.getElementById(
-        "endingText"
+        "lc-ending-text"
     );
 
-
-/* =========================================================
-   CHARACTERS
-========================================================= */
 
 const characters = {
 
     sayori:
         document.getElementById(
-            "sayori"
+            "lc-sayori"
         ),
 
     natsuki:
         document.getElementById(
-            "natsuki"
+            "lc-natsuki"
         ),
 
     yuri:
         document.getElementById(
-            "yuri"
+            "lc-yuri"
         ),
 
     monika:
         document.getElementById(
-            "monika"
+            "lc-monika"
         )
 
 };
 
 
-/* =========================================================
-   BACKGROUND CONTROL
-========================================================= */
+/* =====================================================
+   BACKGROUND
+===================================================== */
 
-function setBackground(image) {
+function setBackground(
+    image
+) {
 
     background.style.backgroundImage =
-        `url("${image}")`;
+        'url("' +
+        image +
+        '")';
 
 }
 
 
-/* =========================================================
-   SHOW CHARACTER
-========================================================= */
+/* =====================================================
+   CHARACTERS
+===================================================== */
 
-function showCharacter(name) {
+function showCharacter(
+    character
+) {
 
-    Object.values(characters)
-        .forEach(character => {
+    Object
+        .values(characters)
+        .forEach(
+            element => {
 
-            character.classList.add(
-                "hidden"
-            );
+                element.classList.add(
+                    "hidden"
+                );
 
-        });
+            }
+        );
 
 
     if (
-        name &&
-        characters[name]
+        character &&
+        characters[character]
     ) {
 
-        characters[name]
-            .classList.remove(
+        characters[character]
+            .classList
+            .remove(
                 "hidden"
             );
 
@@ -1156,223 +1165,13 @@ function showCharacter(name) {
 }
 
 
-/* =========================================================
-   STORY SCENES
-========================================================= */
-
-const scenes = [
-
-    {
-        speaker: "Narrator",
-
-        character: null,
-
-        location: "corridor",
-
-        text:
-        "The final bell rings. You walk through the quiet school corridor when you notice a handwritten sign taped to a classroom door."
-    },
-
-
-    {
-        speaker: "Narrator",
-
-        character: null,
-
-        location: "corridor",
-
-        text:
-        "LITERATURE CLUB — NEW MEMBERS WELCOME."
-    },
-
-
-    {
-        speaker: "Sayori",
-
-        character: "sayori",
-
-        location: "classroom",
-
-        text:
-        "There you are! I was starting to wonder if you'd actually come, {{name}}!"
-    },
-
-
-    {
-        speaker: "Sayori",
-
-        character: "sayori",
-
-        location: "classroom",
-
-        text:
-        "Come on! Everyone's waiting inside."
-    },
-
-
-    {
-        speaker: "Narrator",
-
-        character: null,
-
-        location: "classroom",
-
-        text:
-        "You step through the classroom door."
-    },
-
-
-    {
-        speaker: "Natsuki",
-
-        character: "natsuki",
-
-        location: "classroom",
-
-        text:
-        "Hmph. So you're the new member."
-    },
-
-
-    {
-        speaker: "Natsuki",
-
-        character: "natsuki",
-
-        location: "classroom",
-
-        text:
-        "Don't expect me to make some huge welcome speech."
-    },
-
-
-    {
-        speaker: "Yuri",
-
-        character: "yuri",
-
-        location: "classroom",
-
-        text:
-        "Natsuki... you could at least try to be welcoming."
-    },
-
-
-    {
-        speaker: "Yuri",
-
-        character: "yuri",
-
-        location: "classroom",
-
-        text:
-        "It's nice to meet you, {{name}}."
-    },
-
-
-    {
-        speaker: "Monika",
-
-        character: "monika",
-
-        location: "classroom",
-
-        text:
-        "And I'm Monika, the club president."
-    },
-
-
-    {
-        speaker: "Monika",
-
-        character: "monika",
-
-        location: "classroom",
-
-        text:
-        "I'm glad you decided to give us a chance."
-    },
-
-
-    {
-        speaker: "Sayori",
-
-        character: "sayori",
-
-        location: "classroom",
-
-        text:
-        "Today we're going to do something really simple."
-    },
-
-
-    {
-        speaker: "Sayori",
-
-        character: "sayori",
-
-        location: "classroom",
-
-        text:
-        "We're all going to write a poem!"
-    },
-
-
-    {
-        speaker: "Natsuki",
-
-        character: "natsuki",
-
-        location: "classroom",
-
-        text:
-        "Finally. Something fun."
-    },
-
-
-    {
-        speaker: "Yuri",
-
-        character: "yuri",
-
-        location: "classroom",
-
-        text:
-        "I think writing can reveal quite a lot about someone."
-    },
-
-
-    {
-        speaker: "Monika",
-
-        character: "monika",
-
-        location: "classroom",
-
-        text:
-        "Exactly."
-    },
-
-
-    {
-        speaker: "Monika",
-
-        character: "monika",
-
-        location: "classroom",
-
-        text:
-        "So, {{name}}, whose advice would you like first?"
-    }
-
-];
-
-
-/* =========================================================
-   TEXT PROCESSING
-========================================================= */
-
-function processText(value) {
+/* =====================================================
+   TEXT
+===================================================== */
+
+function processText(
+    value
+) {
 
     return value.replace(
         /\{\{name\}\}/g,
@@ -1382,14 +1181,278 @@ function processText(value) {
 }
 
 
-/* =========================================================
+/* =====================================================
+   STORY
+===================================================== */
+
+const scenes = [
+
+    {
+        speaker:
+            "Narrator",
+
+        character:
+            null,
+
+        background:
+            "corridor.jpg",
+
+        text:
+            "The final bell rings. You walk through the quiet school corridor when you notice a handwritten sign taped to a classroom door."
+    },
+
+
+    {
+        speaker:
+            "Narrator",
+
+        character:
+            null,
+
+        background:
+            "corridor.jpg",
+
+        text:
+            "LITERATURE CLUB — NEW MEMBERS WELCOME."
+    },
+
+
+    {
+        speaker:
+            "Sayori",
+
+        character:
+            "sayori",
+
+        background:
+            "Club.jpeg",
+
+        text:
+            "There you are! I was starting to wonder if you'd actually come, {{name}}!"
+    },
+
+
+    {
+        speaker:
+            "Sayori",
+
+        character:
+            "sayori",
+
+        background:
+            "Club.jpeg",
+
+        text:
+            "Come on! Everyone's waiting inside."
+    },
+
+
+    {
+        speaker:
+            "Narrator",
+
+        character:
+            null,
+
+        background:
+            "Club.jpeg",
+
+        text:
+            "You step into the Literature Club."
+    },
+
+
+    {
+        speaker:
+            "Natsuki",
+
+        character:
+            "natsuki",
+
+        background:
+            "Club.jpeg",
+
+        text:
+            "Hmph. So you're the new member."
+    },
+
+
+    {
+        speaker:
+            "Natsuki",
+
+        character:
+            "natsuki",
+
+        background:
+            "Club.jpeg",
+
+        text:
+            "Don't expect me to make some huge welcome speech."
+    },
+
+
+    {
+        speaker:
+            "Yuri",
+
+        character:
+            "yuri",
+
+        background:
+            "Club.jpeg",
+
+        text:
+            "Natsuki... you could at least try to be welcoming."
+    },
+
+
+    {
+        speaker:
+            "Yuri",
+
+        character:
+            "yuri",
+
+        background:
+            "Club.jpeg",
+
+        text:
+            "It's nice to meet you, {{name}}."
+    },
+
+
+    {
+        speaker:
+            "Monika",
+
+        character:
+            "monika",
+
+        background:
+            "Club.jpeg",
+
+        text:
+            "And I'm Monika, the club president."
+    },
+
+
+    {
+        speaker:
+            "Monika",
+
+        character:
+            "monika",
+
+        background:
+            "Club.jpeg",
+
+        text:
+            "I'm glad you decided to give us a chance."
+    },
+
+
+    {
+        speaker:
+            "Sayori",
+
+        character:
+            "sayori",
+
+        background:
+            "Club.jpeg",
+
+        text:
+            "Today we're going to do something really simple."
+    },
+
+
+    {
+        speaker:
+            "Sayori",
+
+        character:
+            "sayori",
+
+        background:
+            "Club.jpeg",
+
+        text:
+            "We're all going to write a poem!"
+    },
+
+
+    {
+        speaker:
+            "Natsuki",
+
+        character:
+            "natsuki",
+
+        background:
+            "Club.jpeg",
+
+        text:
+            "Finally. Something fun."
+    },
+
+
+    {
+        speaker:
+            "Yuri",
+
+        character:
+            "yuri",
+
+        background:
+            "Club.jpeg",
+
+        text:
+            "I think writing can reveal quite a lot about someone."
+    },
+
+
+    {
+        speaker:
+            "Monika",
+
+        character:
+            "monika",
+
+        background:
+            "Club.jpeg",
+
+        text:
+            "Exactly."
+    },
+
+
+    {
+        speaker:
+            "Monika",
+
+        character:
+            "monika",
+
+        background:
+            "Club.jpeg",
+
+        text:
+            "So, {{name}}, whose advice would you like first?"
+    }
+
+];
+
+
+/* =====================================================
    SHOW SCENE
-========================================================= */
+===================================================== */
 
 function showScene() {
 
     if (
-        sceneIndex >= scenes.length
+        sceneIndex >=
+        scenes.length
     ) {
 
         showMainChoice();
@@ -1400,40 +1463,24 @@ function showScene() {
 
 
     const scene =
-        scenes[sceneIndex];
+        scenes[
+            sceneIndex
+        ];
 
 
-    /* Background */
+    setBackground(
+        scene.background
+    );
 
-    if (
-        scene.location ===
-        "corridor"
-    ) {
-
-        setBackground(
-            "corridor.jpg"
-        );
-
-    } else {
-
-        setBackground(
-            "Club.jpeg"
-        );
-
-    }
-
-
-    /* Character */
 
     showCharacter(
         scene.character
     );
 
 
-    /* Dialogue */
-
     speaker.textContent =
         scene.speaker;
+
 
     text.textContent =
         processText(
@@ -1443,13 +1490,13 @@ function showScene() {
 }
 
 
-/* =========================================================
+/* =====================================================
    DIALOGUE CLICK
-========================================================= */
+===================================================== */
 
 dialogue.addEventListener(
     "click",
-    () => {
+    function() {
 
         if (
             gameFinished
@@ -1458,61 +1505,27 @@ dialogue.addEventListener(
         }
 
 
-        if (
-            poetry.style.display ===
-            "block"
-        ) {
-            return;
-        }
+        sceneIndex++;
 
-
-        if (
-            choices.style.display ===
-            "block"
-        ) {
-            return;
-        }
-
-
-        if (
-            sceneIndex <
-            scenes.length
-        ) {
-
-            sceneIndex++;
-
-            showScene();
-
-            return;
-
-        }
-
-
-        if (
-            postPoemStarted === false
-        ) {
-
-            postPoemStarted = true;
-
-            triggerStoryEvent();
-
-        }
+        showScene();
 
     }
 );
 
 
-/* =========================================================
-   MAIN CHARACTER CHOICE
-========================================================= */
+/* =====================================================
+   CHARACTER CHOICE
+===================================================== */
 
 function showMainChoice() {
 
     dialogue.style.display =
         "none";
 
+
     choices.style.display =
         "block";
+
 
     choices.innerHTML = "";
 
@@ -1520,34 +1533,34 @@ function showMainChoice() {
     const options = [
 
         {
-            text:
-                "Ask Sayori for advice.",
+            name:
+                "Sayori",
 
-            character:
+            key:
                 "sayori"
         },
 
         {
-            text:
-                "Ask Natsuki for advice.",
+            name:
+                "Natsuki",
 
-            character:
+            key:
                 "natsuki"
         },
 
         {
-            text:
-                "Ask Yuri for advice.",
+            name:
+                "Yuri",
 
-            character:
+            key:
                 "yuri"
         },
 
         {
-            text:
-                "Ask Monika for advice.",
+            name:
+                "Monika",
 
-            character:
+            key:
                 "monika"
         }
 
@@ -1564,27 +1577,32 @@ function showMainChoice() {
 
 
             button.className =
-                "choice";
+                "lc-choice";
 
 
             button.textContent =
-                option.text;
+                "Ask " +
+                option.name +
+                " for advice.";
 
 
-            button.onclick = () => {
+            button.addEventListener(
+                "click",
+                function() {
 
-                affection[
-                    option.character
-                ]++;
-
-
-                choices.style.display =
-                    "none";
+                    affection[
+                        option.key
+                    ]++;
 
 
-                openPoetry();
+                    choices.style.display =
+                        "none";
 
-            };
+
+                    openPoetry();
+
+                }
+            );
 
 
             choices.appendChild(
@@ -1597,122 +1615,93 @@ function showMainChoice() {
 }
 
 
-/* =========================================================
+/* =====================================================
    POETRY
-========================================================= */
+===================================================== */
 
 function openPoetry() {
 
-    poetry.style.display =
-        "block";
-
     poemWords = [];
+
 
     poemResult.textContent =
         "Your poem is empty...";
 
-    continuePoem.style.display =
+
+    finishPoem.style.display =
         "none";
+
+
+    poetry.style.display =
+        "block";
 
 }
 
 
-/* =========================================================
-   WORD BUTTONS
-========================================================= */
+/* =====================================================
+   WORDS
+===================================================== */
 
-document
-    .querySelectorAll(".word")
-    .forEach(word => {
+root
+    .querySelectorAll(
+        ".lc-word"
+    )
+    .forEach(
+        word => {
 
-        word.addEventListener(
-            "click",
-            () => {
+            word.addEventListener(
+                "click",
+                function() {
 
-                if (
-                    poemWords.length >=
-                    10
-                ) {
-                    return;
-                }
-
-
-                poemWords.push(
-                    word.textContent
-                );
+                    if (
+                        poemWords.length >=
+                        10
+                    ) {
+                        return;
+                    }
 
 
-                poemResult.textContent =
-                    poemWords.join(
-                        " • "
+                    poemWords.push(
+                        word.textContent
                     );
 
 
-                if (
-                    poemWords.length >=
-                    5
-                ) {
+                    poemResult.textContent =
+                        poemWords.join(
+                            " • "
+                        );
 
-                    continuePoem.style.display =
-                        "inline-block";
+
+                    if (
+                        poemWords.length >=
+                        5
+                    ) {
+
+                        finishPoem.style.display =
+                            "inline-block";
+
+                    }
 
                 }
+            );
 
-            }
-        );
-
-    });
-
-
-/* =========================================================
-   FINISH POEM
-========================================================= */
-
-continuePoem.onclick = () => {
-
-    poetry.style.display =
-        "none";
-
-    dialogue.style.display =
-        "block";
-
-
-    const chosen =
-        determinePoemCharacter();
-
-
-    showCharacter(
-        chosen
+        }
     );
 
 
-    speaker.textContent =
-        capitalize(
-            chosen
-        );
-
-
-    text.textContent =
-        getPoemReaction(
-            chosen
-        );
-
-};
-
-
-/* =========================================================
-   DETERMINE POEM CHARACTER
-========================================================= */
+/* =====================================================
+   POEM CHARACTER
+===================================================== */
 
 function determinePoemCharacter() {
 
-    const wordText =
+    const words =
         poemWords
             .join(" ")
             .toLowerCase();
 
 
-    let score = {
+    const scores = {
 
         sayori:
             affection.sayori,
@@ -1729,84 +1718,73 @@ function determinePoemCharacter() {
     };
 
 
-    /* Sayori words */
-
     if (
-        wordText.includes(
+        words.includes(
             "sunshine"
         ) ||
-        wordText.includes(
+        words.includes(
             "smile"
         ) ||
-        wordText.includes(
+        words.includes(
             "friend"
         ) ||
-        wordText.includes(
+        words.includes(
             "hope"
         )
     ) {
 
-        score.sayori += 2;
+        scores.sayori += 2;
 
     }
 
 
-    /* Natsuki words */
-
     if (
-        wordText.includes(
+        words.includes(
             "heart"
         ) ||
-        wordText.includes(
+        words.includes(
             "warmth"
-        ) ||
-        wordText.includes(
-            "smile"
         )
     ) {
 
-        score.natsuki += 2;
+        scores.natsuki += 2;
 
     }
 
 
-    /* Yuri words */
-
     if (
-        wordText.includes(
+        words.includes(
             "night"
         ) ||
-        wordText.includes(
+        words.includes(
             "silence"
         ) ||
-        wordText.includes(
+        words.includes(
             "ocean"
         ) ||
-        wordText.includes(
+        words.includes(
             "lonely"
         )
     ) {
 
-        score.yuri += 2;
+        scores.yuri += 2;
 
     }
 
 
-    /* Monika words */
-
     if (
-        wordText.includes(
+        words.includes(
             "secret"
         ) ||
-        wordText.includes(
+        words.includes(
             "forever"
         ) ||
-        wordText.includes(
+        words.includes(
             "dream"
         )
     ) {
 
-        score.monika += 2;
+        scores.monika += 2;
 
     }
 
@@ -1815,20 +1793,23 @@ function determinePoemCharacter() {
         "sayori";
 
 
-    Object.keys(score)
-        .forEach(name => {
+    Object.keys(
+        scores
+    ).forEach(
+        key => {
 
             if (
-                score[name] >
-                score[winner]
+                scores[key] >
+                scores[winner]
             ) {
 
                 winner =
-                    name;
+                    key;
 
             }
 
-        });
+        }
+    );
 
 
     return winner;
@@ -1836,11 +1817,11 @@ function determinePoemCharacter() {
 }
 
 
-/* =========================================================
-   POEM REACTIONS
-========================================================= */
+/* =====================================================
+   POEM REACTION
+===================================================== */
 
-function getPoemReaction(
+function poemReaction(
     character
 ) {
 
@@ -1878,7 +1859,7 @@ function getPoemReaction(
     ) {
 
         return (
-            "Yuri studies the page for a moment. " +
+            "Yuri studies the page quietly. " +
             "\"There is something strangely personal about this...\""
         );
 
@@ -1895,102 +1876,87 @@ function getPoemReaction(
 }
 
 
-/* =========================================================
-   STORY EVENT
-========================================================= */
+/* =====================================================
+   FINISH POEM
+===================================================== */
 
-function triggerStoryEvent() {
+finishPoem.addEventListener(
+    "click",
+    function() {
 
-    dialogue.style.display =
-        "none";
-
-    choices.style.display =
-        "none";
-
-    showCharacter(null);
+        poetry.style.display =
+            "none";
 
 
-    setTimeout(
-        () => {
-
-            dialogue.style.display =
-                "block";
-
-            speaker.textContent =
-                "Narrator";
-
-            text.textContent =
-                "The classroom suddenly feels much quieter.";
-
-        },
-        500
-    );
+        dialogue.style.display =
+            "block";
 
 
-    setTimeout(
-        () => {
+        const character =
+            determinePoemCharacter();
 
-            speaker.textContent =
-                "Monika";
 
-            text.textContent =
-                "Did you notice that?";
+        showCharacter(
+            character
+        );
 
-            showCharacter(
-                "monika"
+
+        speaker.textContent =
+            character.charAt(0)
+                .toUpperCase() +
+            character.slice(1);
+
+
+        text.textContent =
+            poemReaction(
+                character
             );
 
-        },
-        2800
-    );
+
+        setTimeout(
+            function() {
+
+                dialogue.onclick =
+                    function() {
+
+                        dialogue.onclick =
+                            null;
+
+                        beginGlitch();
+
+                    };
+
+            },
+            100
+        );
+
+    }
+);
 
 
-    setTimeout(
-        () => {
-
-            speaker.textContent =
-                "Monika";
-
-            text.textContent =
-                "For a moment, I thought the room changed.";
-
-        },
-        5000
-    );
-
-
-    setTimeout(
-        () => {
-
-            beginGlitch();
-
-        },
-        7500
-    );
-
-}
-
-
-/* =========================================================
-   GLITCH EVENT
-========================================================= */
+/* =====================================================
+   GLITCH
+===================================================== */
 
 function beginGlitch() {
 
+    if (
+        glitchStarted
+    ) {
+        return;
+    }
+
+
+    glitchStarted = true;
+
+
     background.classList.add(
-        "glitch"
+        "lc-glitch"
     );
 
 
-    document.body.style.background =
-        "#000";
-
-
-    showCharacter(null);
-
-
     speaker.textContent =
-        "???";
+        "???" ;
 
 
     text.textContent =
@@ -1998,33 +1964,43 @@ function beginGlitch() {
         "...";
 
 
+    showCharacter(
+        null
+    );
+
+
     setTimeout(
-        () => {
+        function() {
 
             text.textContent =
                 "Can you hear me?";
 
         },
-        1300
+        1200
     );
 
 
     setTimeout(
-        () => {
+        function() {
 
             text.textContent =
                 "Something is wrong with this room.";
 
         },
-        2700
+        2600
     );
 
 
     setTimeout(
-        () => {
+        function() {
 
             background.classList.remove(
-                "glitch"
+                "lc-glitch"
+            );
+
+
+            setBackground(
+                "Club.jpeg"
             );
 
 
@@ -2046,116 +2022,112 @@ function beginGlitch() {
 
 
     setTimeout(
-        () => {
+        function() {
 
             text.textContent =
                 "I think I can fix it.";
 
         },
-        5700
+        5600
     );
 
 
     setTimeout(
-        () => {
+        function() {
 
             showFinalChoice();
 
         },
-        7200
+        7000
     );
 
 }
 
 
-/* =========================================================
+/* =====================================================
    FINAL CHOICE
-========================================================= */
+===================================================== */
 
 function showFinalChoice() {
 
     dialogue.style.display =
         "none";
 
+
     choices.style.display =
         "block";
+
 
     choices.innerHTML = "";
 
 
-    const options = [
-
-        {
-            text:
-                "Stay and help Monika.",
-
-            ending:
-                "stay"
-        },
-
-        {
-            text:
-                "Leave the classroom.",
-
-            ending:
-                "leave"
-        }
-
-    ];
+    const stay =
+        document.createElement(
+            "button"
+        );
 
 
-    options.forEach(
-        option => {
-
-            const button =
-                document.createElement(
-                    "button"
-                );
+    stay.className =
+        "lc-choice";
 
 
-            button.className =
-                "choice";
+    stay.textContent =
+        "Stay and help Monika.";
 
 
-            button.textContent =
-                option.text;
+    stay.onclick =
+        function() {
+
+            choices.style.display =
+                "none";
 
 
-            button.onclick = () => {
+            goodEnding();
 
-                choices.style.display =
-                    "none";
-
-
-                if (
-                    option.ending ===
-                    "stay"
-                ) {
-
-                    goodEnding();
-
-                } else {
-
-                    escapeEnding();
-
-                }
-
-            };
+        };
 
 
-            choices.appendChild(
-                button
-            );
+    choices.appendChild(
+        stay
+    );
 
-        }
+
+    const leave =
+        document.createElement(
+            "button"
+        );
+
+
+    leave.className =
+        "lc-choice";
+
+
+    leave.textContent =
+        "Leave the classroom.";
+
+
+    leave.onclick =
+        function() {
+
+            choices.style.display =
+                "none";
+
+
+            escapeEnding();
+
+        };
+
+
+    choices.appendChild(
+        leave
     );
 
 }
 
 
-/* =========================================================
-   GOOD ENDING
-========================================================= */
+/* =====================================================
+   ENDINGS
+===================================================== */
 
 function goodEnding() {
 
@@ -2178,10 +2150,6 @@ function goodEnding() {
 
 }
 
-
-/* =========================================================
-   ESCAPE ENDING
-========================================================= */
 
 function escapeEnding() {
 
@@ -2206,33 +2174,21 @@ function escapeEnding() {
 }
 
 
-/* =========================================================
-   CAPITALIZE
-========================================================= */
-
-function capitalize(value) {
-
-    return (
-        value.charAt(0).toUpperCase() +
-        value.slice(1)
-    );
-
-}
-
-
-/* =========================================================
-   START GAME
-========================================================= */
+/* =====================================================
+   START
+===================================================== */
 
 function startGame() {
 
-    const value =
+    const name =
         nameInput.value.trim();
 
 
     if (
-        value === ""
+        name.length === 0
     ) {
+
+        nameInput.value = "";
 
         nameInput.placeholder =
             "Please enter your name...";
@@ -2245,7 +2201,7 @@ function startGame() {
 
 
     playerName =
-        value.substring(
+        name.substring(
             0,
             20
         );
@@ -2256,6 +2212,10 @@ function startGame() {
 
 
     sceneIndex = 0;
+
+    gameFinished = false;
+
+    glitchStarted = false;
 
 
     setBackground(
@@ -2268,23 +2228,23 @@ function startGame() {
 }
 
 
-/* =========================================================
-   NAME BUTTON
-========================================================= */
+/* =====================================================
+   BUTTON
+===================================================== */
 
-nameButton.addEventListener(
+startButton.addEventListener(
     "click",
     startGame
 );
 
 
-/* =========================================================
+/* =====================================================
    ENTER KEY
-========================================================= */
+===================================================== */
 
 nameInput.addEventListener(
     "keydown",
-    event => {
+    function(event) {
 
         if (
             event.key ===
@@ -2299,15 +2259,17 @@ nameInput.addEventListener(
 );
 
 
-/* =========================================================
+/* =====================================================
    RESTART
-========================================================= */
+===================================================== */
 
 document
-    .getElementById("restart")
+    .getElementById(
+        "lc-restart"
+    )
     .addEventListener(
         "click",
-        () => {
+        function() {
 
             location.reload();
 
@@ -2315,18 +2277,21 @@ document
     );
 
 
-/* =========================================================
-   INITIAL STATE
-========================================================= */
-
-showCharacter(null);
+/* =====================================================
+   INITIALIZATION
+===================================================== */
 
 setBackground(
     "corridor.jpg"
 );
 
+
+showCharacter(
+    null
+);
+
+})();
+
 </script>
 
-</body>
-
-</html>
+</div>
