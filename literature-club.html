@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Literature Club</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #111;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+#game {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background:
+        linear-gradient(
+            rgba(255,190,220,.25),
+            rgba(255,190,220,.25)
+        ),
+        #ffd9e8;
+    overflow: hidden;
+}
+
+/* Background */
+
+#background {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            rgba(255,255,255,.2),
+            rgba(255,255,255,.2)
+        ),
+        repeating-linear-gradient(
+            0deg,
+            #f5cbdc 0px,
+            #f5cbdc 40px,
+            #f9dce8 41px,
+            #f9dce8 80px
+        );
+}
+
+/* Characters */
+
+.character {
+    position: absolute;
+    bottom: 130px;
+    width: 250px;
+    height: 400px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 100px;
+
+    transition:
+        transform .5s,
+        opacity .5s;
+}
+
+#girl1 {
+    left: 8%;
+}
+
+#girl2 {
+    left: 38%;
+}
+
+#girl3 {
+    right: 8%;
+}
+
+.hidden {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* Dialogue */
+
+#dialogue {
+    position: absolute;
+
+    left: 5%;
+    right: 5%;
+    bottom: 20px;
+
+    min-height: 120px;
+
+    background: rgba(20,20,30,.92);
+
+    border: 3px solid #ffb6d3;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    color: white;
+
+    box-shadow:
+        0 0 25px rgba(255,100,170,.35);
+
+    cursor: pointer;
+}
+
+#speaker {
+    color: #ff9fc5;
+    font-size: 20px;
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+#text {
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+/* Choices */
+
+#choices {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: min(500px, 90vw);
+
+    display: none;
+}
+
+.choice {
+    width: 100%;
+
+    margin: 8px 0;
+
+    padding: 15px;
+
+    background: #ff8fbc;
+
+    border: none;
+    border-radius: 8px;
+
+    color: white;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.choice:hover {
+    background: #ff5da0;
+
+    transform: scale(1.03);
+}
+
+/* Poetry */
+
+#poetry {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(255,220,235,.98);
+
+    display: none;
+
+    padding: 40px;
+
+    text-align: center;
+
+    overflow-y: auto;
+}
+
+#poetry h1 {
+    color: #d94f8b;
+}
+
+.words {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    justify-content: center;
+
+    max-width: 700px;
+
+    margin: 30px auto;
+}
+
+.word {
+    background: white;
+
+    border: 2px solid #ff9fc5;
+
+    border-radius: 8px;
+
+    padding: 10px 16px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.word:hover {
+    background: #ffd3e4;
+
+    transform: translateY(-3px);
+}
+
+#poemResult {
+    min-height: 50px;
+
+    color: #a53369;
+
+    font-size: 20px;
+}
+
+#continuePoem {
+    display: none;
+
+    padding: 12px 25px;
+
+    background: #e75a98;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+}
+
+/* Glitch */
+
+.glitch {
+    animation: glitch .08s infinite;
+}
+
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+        filter: none;
+    }
+
+    25% {
+        transform: translate(5px,-2px);
+        filter: hue-rotate(90deg);
+    }
+
+    50% {
+        transform: translate(-5px,2px);
+        filter: invert(.1);
+    }
+
+    75% {
+        transform: translate(2px,4px);
+        filter: hue-rotate(-90deg);
+    }
+
+    100% {
+        transform: translate(0);
+        filter: none;
+    }
+}
+
+/* End screen */
+
+#ending {
+    position: absolute;
+    inset: 0;
+
+    background: #080808;
+
+    color: #ffb6d3;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    text-align: center;
+
+    z-index: 20;
+}
+
+#ending h1 {
+    font-size: 45px;
+}
+
+#restart {
+    padding: 12px 25px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #ff6ba7;
+
+    color: white;
+
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+
+    <div id="background"></div>
+
+    <!-- Characters -->
+
+    <div id="girl1" class="character hidden">
+        🌸
+    </div>
+
+    <div id="girl2" class="character hidden">
+        📚
+    </div>
+
+    <div id="girl3" class="character hidden">
+        🎀
+    </div>
+
+    <!-- Dialogue -->
+
+    <div id="dialogue">
+
+        <div id="speaker">
+            Narrator
+        </div>
+
+        <div id="text">
+            Welcome to the Literature Club...
+        </div>
+
+    </div>
+
+    <!-- Choices -->
+
+    <div id="choices"></div>
+
+    <!-- Poetry -->
+
+    <div id="poetry">
+
+        <h1>Write a Poem</h1>
+
+        <p>
+            Choose words that feel meaningful to you.
+        </p>
+
+        <div id="poemResult"></div>
+
+        <div class="words">
+
+            <div class="word">Dream</div>
+            <div class="word">Love</div>
+            <div class="word">Night</div>
+            <div class="word">Smile</div>
+            <div class="word">Memory</div>
+            <div class="word">Hope</div>
+            <div class="word">Rain</div>
+            <div class="word">Lonely</div>
+            <div class="word">Heart</div>
+            <div class="word">Secret</div>
+            <div class="word">Fear</div>
+            <div class="word">Star</div>
+            <div class="word">Home</div>
+            <div class="word">Forever</div>
+            <div class="word">Silence</div>
+
+        </div>
+
+        <button id="continuePoem">
+            Continue
+        </button>
+
+    </div>
+
+    <!-- Ending -->
+
+    <div id="ending">
+
+        <h1>Thank you for playing.</h1>
+
+        <p id="endingText">
+            Some stories don't end when the screen goes dark.
+        </p>
+
+        <button id="restart">
+            Start Again
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+/* =========================================
+   GAME STATE
+========================================= */
+
+let scene = 0;
+
+let poemWords = [];
+
+const textBox =
+    document.getElementById("dialogue");
+
+const speaker =
+    document.getElementById("speaker");
+
+const text =
+    document.getElementById("text");
+
+const choices =
+    document.getElementById("choices");
+
+const poetry =
+    document.getElementById("poetry");
+
+const ending =
+    document.getElementById("ending");
+
+const background =
+    document.getElementById("background");
+
+
+/* =========================================
+   CHARACTERS
+========================================= */
+
+const characters = {
+    lily: document.getElementById("girl1"),
+    raven: document.getElementById("girl2"),
+    mia: document.getElementById("girl3")
+};
+
+function showCharacter(name) {
+
+    Object.values(characters)
+        .forEach(c => c.classList.add("hidden"));
+
+    if (characters[name]) {
+        characters[name]
+            .classList.remove("hidden");
+    }
+}
+
+
+/* =========================================
+   DIALOGUE
+========================================= */
+
+const scenes = [
+
+    {
+        speaker: "Narrator",
+
+        text:
+        "The school halls were almost empty when you discovered a strange clubroom at the end of the corridor.",
+
+        character: null
+    },
+
+    {
+        speaker: "Lily",
+
+        text:
+        "Oh! You actually came! I was beginning to think nobody would join.",
+
+        character: "lily"
+    },
+
+    {
+        speaker: "You",
+
+        text:
+        "I didn't know there was a literature club here.",
+
+        character: "lily"
+    },
+
+    {
+        speaker: "Lily",
+
+        text:
+        "There wasn't. Not until today.",
+
+        character: "lily"
+    },
+
+    {
+        speaker: "Raven",
+
+        text:
+        "You're making them nervous, Lily.",
+
+        character: "raven"
+    },
+
+    {
+        speaker: "Lily",
+
+        text:
+        "Anyway... why don't you stay for our first activity?",
+
+        character: "lily"
+    }
+
+];
+
+
+/* =========================================
+   SHOW SCENE
+========================================= */
+
+function showScene() {
+
+    if (scene >= scenes.length) {
+
+        showChoices();
+
+        return;
+    }
+
+    const current = scenes[scene];
+
+    speaker.textContent =
+        current.speaker;
+
+    text.textContent =
+        current.text;
+
+    showCharacter(
+        current.character
+    );
+}
+
+
+/* =========================================
+   NEXT DIALOGUE
+========================================= */
+
+textBox.addEventListener("click", () => {
+
+    if (scene < scenes.length) {
+
+        scene++;
+
+        showScene();
+
+    }
+
+});
+
+
+/* =========================================
+   CHOICES
+========================================= */
+
+function showChoices() {
+
+    textBox.style.display = "none";
+
+    choices.style.display = "block";
+
+    choices.innerHTML = "";
+
+    const options = [
+
+        {
+            text: "Write something cheerful.",
+            result: "cheerful"
+        },
+
+        {
+            text: "Write something mysterious.",
+            result: "mysterious"
+        },
+
+        {
+            text: "Write something sad.",
+            result: "sad"
+        }
+
+    ];
+
+    options.forEach(option => {
+
+        const button =
+            document.createElement("button");
+
+        button.className = "choice";
+
+        button.textContent =
+            option.text;
+
+        button.onclick = () => {
+
+            choices.style.display = "none";
+
+            poetry.style.display = "block";
+
+            poemWords = [];
+
+            document.getElementById(
+                "poemResult"
+            ).textContent =
+                "Choose your words...";
+
+        };
+
+        choices.appendChild(button);
+
+    });
+
+}
+
+
+/* =========================================
+   POEM SYSTEM
+========================================= */
+
+document.querySelectorAll(".word")
+.forEach(word => {
+
+    word.addEventListener("click", () => {
+
+        poemWords.push(
+            word.textContent
+        );
+
+        document.getElementById(
+            "poemResult"
+        ).textContent =
+            poemWords.join(" • ");
+
+        if (poemWords.length >= 5) {
+
+            document.getElementById(
+                "continuePoem"
+            ).style.display = "inline-block";
+
+        }
+
+    });
+
+});
+
+
+/* =========================================
+   POEM COMPLETE
+========================================= */
+
+document.getElementById(
+    "continuePoem"
+).onclick = () => {
+
+    poetry.style.display = "none";
+
+    textBox.style.display = "block";
+
+    speaker.textContent = "Raven";
+
+    text.textContent =
+        "That's... an interesting poem.";
+
+    showCharacter("raven");
+
+    setTimeout(() => {
+
+        horrorScene();
+
+    }, 3000);
+
+};
+
+
+/* =========================================
+   HORROR EVENT
+========================================= */
+
+function horrorScene() {
+
+    background.classList.add("glitch");
+
+    document.body.style.background =
+        "#000";
+
+    speaker.textContent =
+        "???";
+
+    text.textContent =
+        "Why are you still playing?";
+
+    showCharacter(null);
+
+    setTimeout(() => {
+
+        background.classList.remove("glitch");
+
+        text.textContent =
+            "You weren't supposed to notice that.";
+
+    }, 2500);
+
+    setTimeout(() => {
+
+        endGame();
+
+    }, 5000);
+
+}
+
+
+/* =========================================
+   ENDING
+========================================= */
+
+function endGame() {
+
+    textBox.style.display = "none";
+
+    ending.style.display = "flex";
+
+    document.getElementById(
+        "endingText"
+    ).textContent =
+        "The clubroom is empty now. But something is still watching.";
+
+}
+
+
+/* =========================================
+   RESTART
+========================================= */
+
+document.getElementById(
+    "restart"
+).onclick = () => {
+
+    location.reload();
+
+};
+
+
+/* =========================================
+   START
+========================================= */
+
+showScene();
+
+</script>
+
+</body>
+</html>
