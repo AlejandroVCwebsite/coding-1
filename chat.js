@@ -28,4 +28,4 @@ function handleUserInput(event) {
 
     chat.innerHTML += `<p><strong>Monika:</strong> ${response}</p>`;
   }
-}
+};
