@@ -109,6 +109,32 @@ window.addEventListener("keyup", e => {
     keys[e.key.toLowerCase()] = false;
 });
 
+// ---------------------------------------------------------
+// GAME STATE
+// ---------------------------------------------------------
+
+let room = 0;
+let score = 0;
+let gameOver = false;
+let victory = false;
+let messageTimer = 0;
+
+const player = {
+    x: 7 * TILE + TILE / 2,
+    y: 9 * TILE + TILE / 2,
+    w: 28,
+    h: 28,
+    speed: 190,
+    health: 5,
+    maxHealth: 5,
+    attacking: false,
+    attackTimer: 0,
+    attackCooldown: 0,
+    direction: "up",
+    invincible: 0,
+    hasKey: false,
+    hasGem: false
+};
 /* CAMERA: follows the player around the world */
 const camera = {
     x: 0,
@@ -138,33 +164,6 @@ const DOOR_LINKS = {
     "1:11,11": { room: 2, spawnX: 7, spawnY: 9 },
     "2:7,8": { room: 1, spawnX: 10, spawnY: 9 }
 };
-// ---------------------------------------------------------
-// GAME STATE
-// ---------------------------------------------------------
-
-let room = 0;
-let score = 0;
-let gameOver = false;
-let victory = false;
-let messageTimer = 0;
-
-const player = {
-    x: 7 * TILE + TILE / 2,
-    y: 9 * TILE + TILE / 2,
-    w: 28,
-    h: 28,
-    speed: 190,
-    health: 5,
-    maxHealth: 5,
-    attacking: false,
-    attackTimer: 0,
-    attackCooldown: 0,
-    direction: "up",
-    invincible: 0,
-    hasKey: false,
-    hasGem: false
-};
-
 
 // ---------------------------------------------------------
 // ROOM MAPS
@@ -178,18 +177,18 @@ const player = {
 
 const maps = [
 [
-"###################",
-"#.................#",
-"#.................#",
-"#.................#",
-"#.................#",
-"#.................#",
-"#.................#",
-"#.................#",
-"#.................#",
-"#......P..........#",
-"#.................#",
-"###################"
+"########################",
+"#......................#",
+"#......................#",
+"#......................#",
+"#......................#",
+"#......................#",
+"#......................#",
+"#......................#",
+"#......................#",
+"#..............p.......#",
+"#......................#",
+"########################"
 ],
 
 [
