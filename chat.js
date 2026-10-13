@@ -1,8 +1,15 @@
 const chatbotResponses = {
-  "hello": "Hi There",
-  "how are you": "Im good, how are you?",
+  "hello": "Hi There, are you here for the literature club?",
+  "how are you?": "Im good, how are you?",
   "im fine": "Good to hear",
   "im alright": "Thats good",
+  "what is your name?":"im monika, whats your name?"
+  "my name is Hakan":"Hakan, that sounds greek, are you the new club member?",
+  "my name is Dragos":"Dragos, thats a stupid name, are you here to join the literature club?",
+  "my name is Elsie":"oh your Elsie, your the clubs newest member right?
+  "my name is Ms Kennedy":"ahh Ms Kenedy, you like coding right, arent you the clubs newest member?",
+  "yes":"wonderfull!",
+  "no":"oh are you sure. maybe try ansewring again",
   "default": "Sorry, I didn't get that. Could you ask again?"
 };
 
