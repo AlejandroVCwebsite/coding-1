@@ -109,7 +109,35 @@ window.addEventListener("keyup", e => {
     keys[e.key.toLowerCase()] = false;
 });
 
+/* CAMERA: follows the player around the world */
+const camera = {
+    x: 0,
+    y: 0,
+    smoothness: 8
+};
 
+/*
+  DOOR CONNECTIONS
+
+  Format:
+  "room:x,y": {
+      room: destination room number,
+      spawnX: destination tile X,
+      spawnY: destination tile Y
+  }
+
+  Room numbers start at 0.
+  Tile coordinates start at 0.
+
+  Example:
+  "1:11,0" means the door at x=11, y=0
+  in room 1 leads to room 0.
+*/
+const DOOR_LINKS = {
+    "1:11,0": { room: 0, spawnX: 7, spawnY: 9 },
+    "1:11,11": { room: 2, spawnX: 7, spawnY: 9 },
+    "2:7,8": { room: 1, spawnX: 10, spawnY: 9 }
+};
 // ---------------------------------------------------------
 // GAME STATE
 // ---------------------------------------------------------
